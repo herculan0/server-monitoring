@@ -1,0 +1,16 @@
+---
+# tasks file for nginx
+- name: Nginx
+  tags:
+    - nginx
+  docker_compose:
+    project_name: nginx
+    definition:
+      version: '2'
+      services:
+        nginx:
+          image: nginx
+          restart: always
+          ports:
+            - "80:80"
+            - "443:443"

@@ -1,0 +1,40 @@
+---
+# tasks file for jenkins
+- name: Import Jenkins GPG key
+  tags:
+    - jenkins
+  apt_key:
+    state: present
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+
+- name: Add Jenkins repository
+  tags:
+    - jenkins
+  apt_repository:
+    repo: deb https://pkg.jenkins.io/debian-stable/ binary/
+    update_cache: yes
+    state: present
+
+- name: Install Java
+  tags:
+    - jenkins
+  apt:
+    name: openjdk-8-jdk
+    state: present
+
+
+- name: Install Jenkins
+  tags:
+    - jenkins
+  apt:
+    name: jenkins
+    state: present
+
+- name: Start Jenkins
+  tags:
+    - jenkins
+  service:
+    name: jenkins
+    enabled: yes
+    state: started
+
