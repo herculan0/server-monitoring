@@ -1,0 +1,27 @@
+---
+# tasks file for grafana
+- name: Grafana
+  tags:
+    - grafana
+  # docker_compose:
+  #   project_src: ../../../../
+  #   state: present
+  docker_compose:
+    project_name: grafana
+    definition:
+      version: '2'
+      services:
+        grafana:
+          image: grafana/grafana
+          ports: 
+            - "3000:3000"
+          user: "root"
+          environment:
+            - "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource"
+            - "{{ lookup('env', 'GF_AWS_PROFILES') }}"
+            - "{{ lookup('env', 'GF_AWS_default_ACCESS_KEY_ID') }}"
+            - "{{ lookup('env', 'GF_AWS_default_SECRET_ACCESS_KEY') }}"
+            - "{{ lookup('env', 'GF_AWS_default_REGION') }}"
+
+          volumes: 
+            - "$PWD/grafana-storage:/var/lib/grafana"

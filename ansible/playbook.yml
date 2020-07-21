@@ -1,0 +1,8 @@
+---
+- hosts: "{{ target | default('localhost') }}"
+  become: yes
+  roles:
+    - docker
+    - nginx
+    - grafana
+    - jenkins
